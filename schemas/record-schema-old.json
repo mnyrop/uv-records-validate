@@ -1,0 +1,379 @@
+{
+  "$schema": "http://json-schema.org/draft-05/schema#",
+  "id": "http://localhost/schemas/records/record-v1.0.0.json",
+  "additionalProperties": false,
+  "title": "invenio-nyu v1.0.0",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "The main JSON schema for the nyu-invenio project",
+      "type": "string"
+    },
+    "_bucket": {
+      "description": "UUID of the deposit bucket.",
+      "type": "string"
+    },
+    "_files": {
+      "description": "Describe information needed for files in records.",
+      "type": "array",
+      "items": {
+        "description": "Describes the information of a single file in the record.",
+        "properties": {
+          "key": {
+            "description": "Key (filename) of the file.",
+            "type": "string"
+          },
+          "file_id": {
+            "description": "UUID of the FileInstance object.",
+            "type": "string"
+          },
+          "bucket": {
+            "description": "UUID of the bucket to which this file is assigned.",
+            "type": "string"
+          },
+          "checksum": {
+            "description": "Checksum the file. Starts with '<algorithm>:' prefix, e.g.: 'md5:1234abcd...'",
+            "type": "string"
+          },
+          "size": {
+            "description": "Size of the file in bytes.",
+            "type": "integer"
+          },
+          "version_id": {
+            "description": "UUID of the ObjectVersion object.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "owner": {
+      "description": "System generated owner id",
+      "type": "number"
+    },
+    "pid": {
+      "description": "System generated item id",
+      "type": "number"
+    },
+    "access_control": {
+      "properties": {
+        "permissions": {
+          "description": "A granular field to signal levels of access and preview for data or object",
+          "enum": [
+            "Open",
+            "Proprietary Mediated",
+            "PII",
+            "Closed"
+          ],
+          "type": "string"
+        },
+        "rights": {
+          "description": "Determines whether or not item is available to anyone or NYU patrons only",
+          "enum": [
+            "Public",
+            "Restricted"
+          ],
+          "type": "string"
+        },
+        "embargo": {
+          "description": "The date in which the embargo for the items in the record is lifted",
+          "type": "date_range",
+          "format": "date-time"
+        }
+      },
+      "type": "object"
+    },
+    "terms_id" : {
+      "description": "Terms of service ID",
+      "type": "number"
+    },
+    "title_s": {
+      "description": "Main title of the record for the catalog",
+      "type": "string"
+    },
+    "creator_sm": {
+      "description": "Name of person or organization responsible for creation of object or dataset",
+      "properties": {
+        "affiliation": {
+          "description": "Affiliation of creator",
+          "type": "string"
+        },
+        "creator_contact": {
+          "description": "Email or contact information of creator",
+          "type": "string"
+        },
+        "creator_name": {
+          "description": "String name of the creator of the record",
+          "type": "string"
+        },
+        "creator_type": {
+          "description": "Categorizes the creator of the record",
+          "enum": [
+            "Personal",
+            "Organizational"
+          ],
+          "type": "string"
+        },
+        "id_scheme": {
+          "description": "Scheme of creator ID",
+          "enum": [
+            "ORCID",
+            "CrossRef",
+            "ResearcherID",
+            "Scopus"
+          ],
+          "type": "string"
+        },
+        "creator_identifier": {
+          "description": "Identifier of object creator",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "keywords_sm": {
+        "description": "Free text words that improve discoverability of data or objects",
+        "type": "array"
+    },
+    "language_sm": {
+        "description": "The language associated with the data or object",
+        "type": "array"
+    },
+    "description_s": {
+        "description": "Complete sentences that describe the items in the record",
+        "type": "string"
+    },
+    "temporal_coverage_dt": {
+      "description": "The inclusive range of ground dates that apply to the object",
+      "type": "object",
+      "properties": {
+        "start_date": {
+          "description": "The beginning date pertaining to ground coverage of object",
+          "type": "date",
+          "format": "date-time"
+        },
+        "end_date": {
+          "description": "The end date pertaining to ground coverage of object",
+          "type": "date",
+          "format": "date-time"
+        }
+      }
+    },
+    "storage_location_s": {
+      "description": "Name of Invenio storage location",
+      "enum": [
+        "local",
+        "s3"
+      ],
+      "type": "string"
+    },
+    "alt_title_sm": {
+      "description": "Alternative title or acronym the record could be known by",
+      "properties": {
+        "label": {
+          "description": "The value of the alternative title",
+          "type": "string"
+        },
+        "kind": {
+          "description": "A description of the kind of alternative title",
+          "enum": [
+            "AlternativeTitle",
+            "TranslatedTitle",
+            "Subtitle",
+            "Other"
+          ],
+          "type": "string"
+        },
+        "type": "object"
+      }
+    },
+    "external_identifier_sm": {
+      "description": "An external identifier that represents the record",
+      "properties": {
+        "schema": {
+          "description": "Persistent identifier scheme",
+          "enum": [
+            "ads",
+            "ark",
+            "arxiv",
+            "bioproject",
+            "biosample",
+            "doi",
+            "ean13",
+            "ean8",
+            "ensembl",
+            "genome",
+            "gnd",
+            "hal",
+            "handle",
+            "isbn",
+            "isni",
+            "issn",
+            "istc",
+            "lsid",
+            "orcid",
+            "pmcid",
+            "pmid",
+            "purl",
+            "refseq",
+            "sra",
+            "uniprot",
+            "url",
+            "urn",
+            "swh",
+            "ascl"
+          ],
+          "type": "string"
+        },
+        "id_value": {
+          "description": "Value of the identifier",
+          "type": "string"
+        },
+        "type": "object"
+      }
+    },
+    "publisher_sm": {
+      "description": "The organization or entity responsible for the release of the data or object",
+      "type": "array"
+    },
+    "type_s": {
+      "description": "The kind of resource that best describes the objects in the record",
+      "enum": [
+        "AudioVisual",
+        "Collection",
+        "DataPaper",
+        "Image",
+        "InteractiveResource",
+        "Model",
+        "PhysicalObject",
+        "Service",
+        "Software",
+        "Sound",
+        "Text18",
+        "Workflow",
+        "Other"
+      ],
+      "type": "string"
+    },
+    "genre_s": {
+      "description": "A short ontology to organize the kind of dataset in repository",
+      "enum": [
+        "Tabular Data",
+        "Geospatial Data",
+        "Text corpus",
+        "3D",
+        "Software",
+        "Code",
+        "Mixed"
+      ],
+      "type": "string"
+    },
+    "related_resource_sm": {
+      "description": "A flexible distribution to indicate relationships between the record and other resources, including external resources",
+      "properties": {
+        "relationship_type": {
+          "description": "A short ontology to describe the nature of the relationship between the object",
+          "enum": [
+            "isCitedBy",
+            "cites",
+            "isSupplementTo",
+            "isSupplementedBy",
+            "isContinuedBy",
+            "continues",
+            "hasMetadata",
+            "isMetadataFor",
+            "isNewVersionOf",
+            "isPreviousVersionOf",
+            "isPartOf",
+            "hasPart",
+            "isReferencedBy",
+            "references",
+            "isDocumentedBy",
+            "documents",
+            "isCompiledBy",
+            "compiles",
+            "isVariantFormOf",
+            "isOriginalFormOf",
+            "isIdenticalTo",
+            "isReviewedBy",
+            "reviews",
+            "isDerivedFrom",
+            "isSourceOf"
+          ],
+          "type": "string"
+        },
+        "label": {
+          "description": "An application-facing label for the related resource",
+          "type": "string"
+        },
+        "accessUrl": {
+          "description": "The location of the related resource if external",
+          "type": "string"
+        },
+        "type": "object"
+      }
+    },
+    "issued_dt": {
+      "description": "The date when the items in record are first published",
+      "type": "date_range",
+      "format": "date-time"
+    },
+    "methodology_sm": {
+      "description": "An uncontrolled short ontology of academic or disciplinary methods associated with generation of object",
+      "type": "array"
+    },
+    "license_s": {
+      "description": "Intellectual property rights associated with the items in the record",
+      "enum": [
+        "Attribution (CC BY)",
+        "Attribution ShareAlike (CC BY-SA)",
+        "Attribution-NoDerivs (CC BY-ND)",
+        "Attribution-NonCommercial (CC BY-NC)",
+        "Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)",
+        "Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)",
+        "GNU AGPLv3",
+        "GNU GPLv3",
+        "GNU LGPLv3",
+        "Private license held by publisher",
+        "The Unlicense",
+        "MIT License",
+        "Mozilla Public License 2.0"
+      ],
+      "type": "string"
+    },
+    "funder_sm": {
+      "description": "Information pertaining to the funding associated with the creation of the dataset or object",
+      "properties": {
+        "funder_name": {
+          "description": "Name of the funder, award, or granting agency supporting the creation of object",
+          "type": "string"
+        },
+        "award_id": {
+          "description": "Unique ID or number of grant or award",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "spatial_coverage_sm": {
+      "description": "Placenames from Geonames ontology that describe the subject of the dataset or object",
+      "properties": {
+        "placename": {
+          "description": "The string label for the Geonames place",
+          "type": "string"
+        },
+        "bbox": {
+          "description": "A representation of the logical extent of the dataset in Solr syntax",
+          "type": "string"
+        },
+        "type": "object"
+      }
+    },
+    "required": [
+      "$schema",
+      "id",
+      "owner",
+      "title_s",
+      "creator_sm"
+    ]
+  }
+}
